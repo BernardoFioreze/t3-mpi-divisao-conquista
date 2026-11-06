@@ -1,0 +1,8 @@
+# binarios compilados (recompilar no Atlantica)
+src/sequencial
+src/original
+src/balanceado
+*.o
+
+# NAO ignorar resultados/*.out: as saidas do Slurm com os tempos brutos
+# fazem parte da entrega (secao 8 do enunciado).
