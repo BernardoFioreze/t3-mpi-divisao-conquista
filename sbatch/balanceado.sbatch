@@ -17,7 +17,7 @@
 ## #SBATCH --nodelist=<no1>,<no2>
 
 set -eu
-N=${N:-100000}
+N=${N:-200000}   # calibrado no Atlantica: T1 ~ 40s (mediana medida)
 REPS=${REPS:-10}
 cd "${SLURM_SUBMIT_DIR:-.}"
 BIN=src/balanceado
