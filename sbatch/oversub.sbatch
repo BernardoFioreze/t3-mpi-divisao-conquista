@@ -34,11 +34,14 @@ echo "# ulimit -n (apos ajuste) = $(ulimit -n)  Hn = $(ulimit -Hn)"
 
 echo "# nodelist=${SLURM_JOB_NODELIST:-?}  N=$N  REPS=$REPS"
 
+# A errata da v2 do enunciado pede as DUAS series com a variavel definida
+# EXPLICITAMENTE (=0 e =1), porque, dependendo do lancamento, deixa-la sem
+# definir pode ja ceder o nucleo e as duas medirem a mesma coisa.
 for mode in default yield; do
   if [ "$mode" = yield ]; then
-    export OMPI_MCA_mpi_yield_when_idle=1
+    export OMPI_MCA_mpi_yield_when_idle=1   # cede o nucleo enquanto espera
   else
-    unset OMPI_MCA_mpi_yield_when_idle
+    export OMPI_MCA_mpi_yield_when_idle=0   # espera ativa (explicito, nao 'unset')
   fi
   for P in 63 127 255 511 1023; do
     delta=$(( (2*N + P) / (P + 1) ))
