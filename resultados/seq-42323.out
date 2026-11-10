@@ -1,0 +1,156 @@
+# host=atlantica01  N=200000  REPS=10
+CPU(s):                          16
+Thread(s) per core:              2
+Core(s) per socket:              4
+Socket(s):                       2
+Model name:                      Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+serie=T1 P=1 rep=1  n=200000 delta=200000 tempo=40.355137 verificacao=OK
+serie=T1 P=1 rep=2  n=200000 delta=200000 tempo=40.339391 verificacao=OK
+serie=T1 P=1 rep=3  n=200000 delta=200000 tempo=40.349509 verificacao=OK
+serie=T1 P=1 rep=4  n=200000 delta=200000 tempo=40.351107 verificacao=OK
+serie=T1 P=1 rep=5  n=200000 delta=200000 tempo=40.362245 verificacao=OK
+serie=T1 P=1 rep=6  n=200000 delta=200000 tempo=40.352616 verificacao=OK
+serie=T1 P=1 rep=7  n=200000 delta=200000 tempo=40.383103 verificacao=OK
+serie=T1 P=1 rep=8  n=200000 delta=200000 tempo=40.347303 verificacao=OK
+serie=T1 P=1 rep=9  n=200000 delta=200000 tempo=40.365267 verificacao=OK
+serie=T1 P=1 rep=10  n=200000 delta=200000 tempo=40.355724 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=1  n=200000 delta=100000 tempo=20.049984 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=2  n=200000 delta=100000 tempo=20.050190 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=3  n=200000 delta=100000 tempo=20.032653 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=4  n=200000 delta=100000 tempo=20.072848 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=5  n=200000 delta=100000 tempo=20.034153 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=6  n=200000 delta=100000 tempo=20.050947 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=7  n=200000 delta=100000 tempo=20.058430 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=8  n=200000 delta=100000 tempo=20.037101 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=9  n=200000 delta=100000 tempo=20.054996 verificacao=OK
+serie=T1d_orig P=3 delta=100000 rep=10  n=200000 delta=100000 tempo=20.057109 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=1  n=200000 delta=50000 tempo=9.954010 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=2  n=200000 delta=50000 tempo=9.968310 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=3  n=200000 delta=50000 tempo=9.961119 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=4  n=200000 delta=50000 tempo=9.974713 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=5  n=200000 delta=50000 tempo=9.949895 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=6  n=200000 delta=50000 tempo=9.913241 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=7  n=200000 delta=50000 tempo=9.975362 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=8  n=200000 delta=50000 tempo=9.961120 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=9  n=200000 delta=50000 tempo=9.970409 verificacao=OK
+serie=T1d_orig P=7 delta=50000 rep=10  n=200000 delta=50000 tempo=9.948091 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=1  n=200000 delta=25000 tempo=4.903781 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=2  n=200000 delta=25000 tempo=4.916216 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=3  n=200000 delta=25000 tempo=4.907820 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=4  n=200000 delta=25000 tempo=4.912632 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=5  n=200000 delta=25000 tempo=4.915611 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=6  n=200000 delta=25000 tempo=4.904274 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=7  n=200000 delta=25000 tempo=4.911141 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=8  n=200000 delta=25000 tempo=4.920793 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=9  n=200000 delta=25000 tempo=4.921281 verificacao=OK
+serie=T1d_orig P=15 delta=25000 rep=10  n=200000 delta=25000 tempo=4.911621 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=1  n=200000 delta=12500 tempo=2.387117 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=2  n=200000 delta=12500 tempo=2.384763 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=3  n=200000 delta=12500 tempo=2.386732 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=4  n=200000 delta=12500 tempo=2.386358 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=5  n=200000 delta=12500 tempo=2.378926 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=6  n=200000 delta=12500 tempo=2.387298 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=7  n=200000 delta=12500 tempo=2.378959 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=8  n=200000 delta=12500 tempo=2.379617 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=9  n=200000 delta=12500 tempo=2.383279 verificacao=OK
+serie=T1d_orig P=31 delta=12500 rep=10  n=200000 delta=12500 tempo=2.382132 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=1  n=200000 delta=6250 tempo=1.124910 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=2  n=200000 delta=6250 tempo=1.125368 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=3  n=200000 delta=6250 tempo=1.117808 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=4  n=200000 delta=6250 tempo=1.122215 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=5  n=200000 delta=6250 tempo=1.130209 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=6  n=200000 delta=6250 tempo=1.133537 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=7  n=200000 delta=6250 tempo=1.129004 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=8  n=200000 delta=6250 tempo=1.116554 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=9  n=200000 delta=6250 tempo=1.113244 verificacao=OK
+serie=T1d_orig P=63 delta=6250 rep=10  n=200000 delta=6250 tempo=1.126943 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=1  n=200000 delta=3125 tempo=0.562416 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=2  n=200000 delta=3125 tempo=0.552664 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=3  n=200000 delta=3125 tempo=0.549959 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=4  n=200000 delta=3125 tempo=0.553539 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=5  n=200000 delta=3125 tempo=0.550875 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=6  n=200000 delta=3125 tempo=0.546745 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=7  n=200000 delta=3125 tempo=0.549427 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=8  n=200000 delta=3125 tempo=0.555328 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=9  n=200000 delta=3125 tempo=0.548150 verificacao=OK
+serie=T1d_orig P=127 delta=3125 rep=10  n=200000 delta=3125 tempo=0.554281 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=1  n=200000 delta=1563 tempo=0.289432 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=2  n=200000 delta=1563 tempo=0.288944 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=3  n=200000 delta=1563 tempo=0.289747 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=4  n=200000 delta=1563 tempo=0.290032 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=5  n=200000 delta=1563 tempo=0.288781 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=6  n=200000 delta=1563 tempo=0.292189 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=7  n=200000 delta=1563 tempo=0.291509 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=8  n=200000 delta=1563 tempo=0.287183 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=9  n=200000 delta=1563 tempo=0.292472 verificacao=OK
+serie=T1d_orig P=255 delta=1563 rep=10  n=200000 delta=1563 tempo=0.288076 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=1  n=200000 delta=782 tempo=0.153808 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=2  n=200000 delta=782 tempo=0.149280 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=3  n=200000 delta=782 tempo=0.151799 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=4  n=200000 delta=782 tempo=0.150012 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=5  n=200000 delta=782 tempo=0.150474 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=6  n=200000 delta=782 tempo=0.152495 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=7  n=200000 delta=782 tempo=0.154511 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=8  n=200000 delta=782 tempo=0.154415 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=9  n=200000 delta=782 tempo=0.153326 verificacao=OK
+serie=T1d_orig P=511 delta=782 rep=10  n=200000 delta=782 tempo=0.150560 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=1  n=200000 delta=391 tempo=0.074959 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=2  n=200000 delta=391 tempo=0.080789 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=3  n=200000 delta=391 tempo=0.075298 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=4  n=200000 delta=391 tempo=0.074990 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=5  n=200000 delta=391 tempo=0.080407 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=6  n=200000 delta=391 tempo=0.075546 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=7  n=200000 delta=391 tempo=0.075275 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=8  n=200000 delta=391 tempo=0.075725 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=9  n=200000 delta=391 tempo=0.074700 verificacao=OK
+serie=T1d_orig P=1023 delta=391 rep=10  n=200000 delta=391 tempo=0.075816 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=1  n=200000 delta=100000 tempo=20.060478 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=2  n=200000 delta=100000 tempo=20.048968 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=3  n=200000 delta=100000 tempo=20.066332 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=4  n=200000 delta=100000 tempo=20.058117 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=5  n=200000 delta=100000 tempo=20.056565 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=6  n=200000 delta=100000 tempo=20.069994 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=7  n=200000 delta=100000 tempo=20.062315 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=8  n=200000 delta=100000 tempo=20.060771 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=9  n=200000 delta=100000 tempo=20.067807 verificacao=OK
+serie=T1d_bal P=2 delta=100000 rep=10  n=200000 delta=100000 tempo=20.056620 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=1  n=200000 delta=50000 tempo=9.967186 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=2  n=200000 delta=50000 tempo=9.948927 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=3  n=200000 delta=50000 tempo=9.956115 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=4  n=200000 delta=50000 tempo=9.941792 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=5  n=200000 delta=50000 tempo=9.969144 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=6  n=200000 delta=50000 tempo=9.964294 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=7  n=200000 delta=50000 tempo=9.944504 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=8  n=200000 delta=50000 tempo=9.957139 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=9  n=200000 delta=50000 tempo=9.966912 verificacao=OK
+serie=T1d_bal P=4 delta=50000 rep=10  n=200000 delta=50000 tempo=9.938070 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=1  n=200000 delta=25000 tempo=4.925589 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=2  n=200000 delta=25000 tempo=4.915541 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=3  n=200000 delta=25000 tempo=4.910905 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=4  n=200000 delta=25000 tempo=4.916255 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=5  n=200000 delta=25000 tempo=4.905783 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=6  n=200000 delta=25000 tempo=4.914689 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=7  n=200000 delta=25000 tempo=4.917071 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=8  n=200000 delta=25000 tempo=4.912582 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=9  n=200000 delta=25000 tempo=4.919079 verificacao=OK
+serie=T1d_bal P=8 delta=25000 rep=10  n=200000 delta=25000 tempo=4.920197 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=1  n=200000 delta=12500 tempo=2.393719 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=2  n=200000 delta=12500 tempo=2.382338 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=3  n=200000 delta=12500 tempo=2.385368 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=4  n=200000 delta=12500 tempo=2.378431 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=5  n=200000 delta=12500 tempo=2.387599 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=6  n=200000 delta=12500 tempo=2.370835 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=7  n=200000 delta=12500 tempo=2.380953 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=8  n=200000 delta=12500 tempo=2.371117 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=9  n=200000 delta=12500 tempo=2.388720 verificacao=OK
+serie=T1d_bal P=16 delta=12500 rep=10  n=200000 delta=12500 tempo=2.386797 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=1  n=200000 delta=6250 tempo=1.116329 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=2  n=200000 delta=6250 tempo=1.115440 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=3  n=200000 delta=6250 tempo=1.120146 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=4  n=200000 delta=6250 tempo=1.108262 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=5  n=200000 delta=6250 tempo=1.118875 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=6  n=200000 delta=6250 tempo=1.121353 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=7  n=200000 delta=6250 tempo=1.119140 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=8  n=200000 delta=6250 tempo=1.126198 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=9  n=200000 delta=6250 tempo=1.111628 verificacao=OK
+serie=T1d_bal P=32 delta=6250 rep=10  n=200000 delta=6250 tempo=1.127074 verificacao=OK

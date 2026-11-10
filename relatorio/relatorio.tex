@@ -1,0 +1,200 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue!60!black,linkcolor=black}
+
+\newcommand{\sd}{\ensuremath{S^{\delta}}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+% ================= CABECALHO COMPACTO =================
+\begin{center}
+  {\large\bfseries Trabalho 3 (T3): Divisão e conquista com MPI}\\[2pt]
+  {\small Ordenação de um vetor (Bubble Sort nas folhas) --- Unidade 04}\\[4pt]
+  {\footnotesize
+   \textbf{Integrantes:} Bernardo Fioreze \textit{(preencher demais integrantes)} \quad|\quad
+   \textbf{Repositório:} \url{https://github.com/BernardoFioreze/t3-mpi-divisao-conquista}}\\[2pt]
+  {\footnotesize
+   \textbf{Ambiente:} cluster Atlântica (LAD), \textbf{2 nós exclusivos}; cada nó = 2$\times$ Intel Xeon
+   E5520 @ 2,27\,GHz = \textbf{8 núcleos físicos / 16 threads (HT) por nó} (\texttt{lscpu}),
+   logo \textbf{16 núcleos físicos / 32 threads} nos 2 nós. $N=200000$, 10 repetições por configuração
+   (mediana\,/\,mín\,/\,máx), todas com \texttt{verificacao=OK}.}
+\end{center}
+\hrule
+\vspace{4pt}
+
+% ================= ANALISE =================
+\textbf{\large Análise dos resultados}
+
+\textbf{1. Modelagem.}
+Todos os processos rodam o mesmo executável (SPMD) e descobrem seu papel pelo \texttt{rank}.
+Na \emph{versão original} a árvore é indexada como um heap: a raiz é o \texttt{rank}~0, um processo
+$r$ tem filhos $2r{+}1$ e $2r{+}2$ e pai $(r{-}1)/2$ (\texttt{original.c}:9--10). O processo não conhece
+o tamanho do pedaço de antemão: ele o descobre com \texttt{MPI\_Probe}/\texttt{MPI\_Get\_count} antes de
+alocar (\texttt{original.c}:99--102). Se o pedaço é $\le\delta$ ele conquista com Bubble Sort
+(linhas 123--124); senão envia \textbf{as duas metades} aos filhos (linhas 129--130) \textbf{antes} de
+qualquer \texttt{MPI\_Recv} (linhas 132--133), para os dois filhos trabalharem ao mesmo tempo, e
+intercala na volta (linha 134). Na \emph{versão balanceada} o processo não entrega as duas metades: manda
+a metade direita ao ajudante $r+2^{\text{nível}}$ (\texttt{MPI\_Isend}, \texttt{balanceado.c}:90) e
+\textbf{fica com a esquerda}, descendo um nível (linha 95); recebe a direita ordenada de volta e intercala
+(linhas 98--100). Um não-raiz descobre onde nasceu pelo bit menos significativo do \texttt{rank}:
+nível inicial $=\texttt{ctz}(r)-1$ (linha 170) e pai $= r\,\&\,(r{-}1)$ (linha 139). O \texttt{MPI\_Isend}
+seguido de \texttt{MPI\_Request\_free} (linhas 90--92) evita bloquear e descarta a \emph{request} porque o
+\texttt{MPI\_Recv} do mesmo ajudante (linha 98) só retorna depois que a mensagem foi consumida. Com $P$
+potência de 2 todas as folhas têm $N/P$; com $P=2^{k}-1$ (caso da original) elas diferem em um elemento.
+
+\textbf{2. Speed-up, eficiência e a separação do ganho de algoritmo.}
+A Tabela~\ref{tab:seq} mostra o ganho de algoritmo $T_1/T_1^{\delta}$ indo de $2{,}0\times$ ($\delta{=}10^5$)
+a $535\times$ ($\delta{=}391$): quase todo o ``speed-up'' acima de $P$ vem daí, não do paralelismo.
+Por exemplo, na original com $P{=}31$ e $\delta{=}12500$ temos $S=125\times$ mas \sd${}=7{,}4\times$; e
+$7{,}4 \times 16{,}9$ (o ganho de algoritmo em $\delta{=}12500$) $\approx 125$. A \sd{} é o paralelismo
+honesto (contra a \emph{mesma} árvore em um processo) e a eficiência $E=\sd/P$ cai de $0{,}67$ ($P{=}3$) a
+$0{,}24$ ($P{=}31$) por causa da comunicação e da árvore (só as folhas calculam --- ponto 3).
+Para a versão balanceada com \textbf{31 processos} (não potência de 2), as folhas têm tamanhos diferentes
+e um $\delta$ único não reproduz a árvore; por isso ela fica fora da Tabela~\ref{tab:bal} (que traz só as
+potências de 2, com \sd{} e $E$), mas seu $S$ é válido e medido: $T_P=0{,}205$\,s, $S=197\times$, contra
+$125\times$ da original no \emph{mesmo} $P{=}31$ (ponto 5).
+
+\textbf{3. Balanceamento da carga nos níveis (original).}
+Cada nó interno divide e então fica \textbf{parado} em \texttt{MPI\_Recv} (\texttt{original.c}:132--133)
+até os filhos voltarem; apenas o nível das folhas executa Bubble Sort. Num dado instante os níveis
+superiores estão ociosos e, na volta, fazem só a intercalação barata ($O(n)$). É esse desbalanceamento
+que a versão balanceada ataca ao fazer o pai também ordenar uma folha.
+
+\textbf{4. Ganho com HT.}
+Comparando $P{=}15$ (um processo por núcleo físico; há 16 físicos nos 2 nós) com $P{=}31$ (passa a usar as
+threads de Hyper-Threading): o tempo cai de $0{,}709$ para $0{,}322$\,s ($2{,}2\times$), mas o $\delta$
+também muda ($25000\!\to\!12500$). Olhando a \sd{}, que isola o paralelismo, o ganho é só
+$6{,}93\!\to\!7{,}41$ ($+7\%$). Ou seja, o HT quase não aumenta o paralelismo real: as duas threads de um
+núcleo dividem as mesmas unidades de execução e o Bubble Sort é limitado por CPU; o grosso da melhora de
+$P{=}15$ para $31$ vem das folhas menores (algoritmo), não de mais processamento simultâneo.
+
+\textbf{5. Ganho com o balanceamento.}
+Duas formas, como pede o enunciado. \emph{Sem alterar o código} (mais processos que núcleos --- série de
+oversubscription, Tabela~\ref{tab:over}): quem balanceia é o escalonador do SO (ponto 6).
+\emph{Alterando o código} (versão balanceada): no mesmo $P{=}31$ o tempo cai de $0{,}322$ para
+$0{,}205$\,s ($1{,}57\times$ mais rápido) porque os processos internos deixam de ficar ociosos e também
+ordenam uma folha. Em potências de 2 a eficiência da balanceada se mantém alta ($E\approx0{,}49$ até
+$P{=}8$) enquanto a da original já está caindo.
+
+\textbf{6. Desempenho de 63 a 1023 processos: espera ativa $\times$ núcleo cedido.}
+Com mais processos que as 32 threads de hardware, a \textbf{espera ativa}
+(\texttt{OMPI\_MCA\_mpi\_yield\_when\_idle=0}) faz um processo bloqueado em \texttt{MPI\_Recv} ocupar o
+núcleo em laço; com \texttt{OMPI\_MCA\_mpi\_yield\_when\_idle=1} ele \textbf{cede o núcleo}. As duas
+séries foram medidas com a variável \textbf{definida explicitamente} (0 e 1), como pede a errata do
+enunciado, pois deixá-la indefinida pode já ceder o núcleo e fazer as duas medirem a mesma coisa (foi o
+que observamos: com a variável indefinida a espera ativa era bem mais rápida, sinal de que o núcleo já
+estava sendo cedido). Em oversubscription moderado o \emph{yield} ganha claramente: em $P{=}127$,
+$0{,}519$\,s (espera ativa) contra $0{,}184$\,s (cede o núcleo), $2{,}8\times$; em $P{=}63$, $0{,}333$
+contra $0{,}214$. A diferença entre as duas séries é exatamente quanto o
+escalonador do SO consegue balancear quando os processos cooperam cedendo o núcleo que não estão usando.
+A partir de $P{=}255$ os dois pioram (muito além de 32 threads: troca de contexto e pressão de memória
+dominam) e a eficiência $E=\sd/32$ fica ínfima, mas o \emph{yield} degrada menos. O caso $P{=}1023$ rodou
+completo nos dois modos após elevar \texttt{ulimit -n} a 512000 e usar \texttt{opal\_set\_max\_sys\_limits}
+(senão estourava o limite de \emph{pipes} do SO ao encaminhar a saída de cada rank).
+
+\textbf{7. Uso de ferramentas de IA.}
+Declaramos o uso do Claude (Anthropic) para: entender o enunciado; derivar a implementação a partir do
+pseudocódigo (indexação em heap na original; esquema de ``pente''/Radenski na balanceada); escrever os
+scripts \texttt{sbatch} e o \texttt{analise.py}; e depurar erros do cluster (falha do PMIx e o limite de
+\emph{pipes} em $P{=}1023$). Revisamos o código linha a linha, sabemos explicar cada chamada MPI, e as
+decisões de modelagem e de medição são do grupo.
+
+% ================= TABELAS =================
+\begin{table}[htbp]\centering\footnotesize
+\caption{Referências sequenciais ($N{=}200000$, 1 processo). $T_1$ ordena o vetor inteiro;
+as demais linhas percorrem a mesma árvore da versão paralela até folhas $\le\delta$, em um só processo.
+A coluna \emph{níveis} é a profundidade da árvore (número de divisões até a folha) que cada $\delta$ gera
+na versão original ($P=2^{\text{níveis}+1}-1$). O ganho de algoritmo $T_1/T_1^{\delta}$ explica por que
+$S$ passa de $P$.}
+\label{tab:seq}
+\begin{tabular}{l r r r r r}
+\toprule
+níveis & $\delta$ & mediana (s) & mín (s) & máx (s) & $T_1/T_1^{\delta}$\\
+\midrule
+$T_1$ & ---    & 40,354 & 40,339 & 40,383 & ---\\
+1     & 100000 & 20,051 & 20,033 & 20,073 & 2,01\\
+2     & 50000  &  9,961 &  9,913 &  9,975 & 4,05\\
+3     & 25000  &  4,912 &  4,904 &  4,921 & 8,22\\
+4     & 12500  &  2,384 &  2,379 &  2,387 & 16,93\\
+5     & 6250   &  1,125 &  1,113 &  1,134 & 35,87\\
+6     & 3125   &  0,552 &  0,547 &  0,562 & 73,14\\
+7     & 1563   &  0,290 &  0,287 &  0,292 & 139,35\\
+8     & 782    &  0,152 &  0,149 &  0,155 & 265,23\\
+9     & 391    &  0,075 &  0,075 &  0,081 & 535,04\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\begin{minipage}[t]{0.48\textwidth}\centering
+\caption{Versão original ($P=2^{k}{-}1$). $S=T_1/T_P$; \sd${}=T_1^{\delta}/T_P$; $E=\sd/P$.}
+\label{tab:orig}
+\begin{tabular}{r r r r r r}
+\toprule
+$P$ & $\delta$ & $T_P$ (s) & $S$ & \sd & $E$\\
+\midrule
+ 1 & 200000 & 40,388 &   1,00 & ---  & ---\\
+ 3 & 100000 & 10,053 &   4,01 & 1,99 & 0,665\\
+ 7 & 50000  &  2,577 &  15,66 & 3,87 & 0,552\\
+15 & 25000  &  0,709 &  56,90 & 6,93 & 0,462\\
+31 & 12500  &  0,322 & 125,38 & 7,41 & 0,239\\
+\bottomrule
+\end{tabular}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\centering
+\caption{Versão balanceada ($P$ potência de 2; folhas iguais de $\delta=N/P$).
+$S=T_1/T_P$; \sd${}=T_1^{\delta}/T_P$; $E=\sd/P$.}
+\label{tab:bal}
+\begin{tabular}{r r r r r r}
+\toprule
+$P$ & $\delta$ & $T_P$ (s) & $S$ & \sd & $E$\\
+\midrule
+ 2 & 100000 & 20,081 &   2,01 & 1,00 & 0,499\\
+ 4 &  50000 &  4,992 &   8,08 & 1,99 & 0,499\\
+ 8 &  25000 &  1,262 &  31,98 & 3,90 & 0,487\\
+16 &  12500 &  0,361 & 111,84 & 6,61 & 0,413\\
+32 &   6250 &  0,170 & 236,72 & 6,56 & 0,205\\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Oversubscription da versão original (63--1023 processos nos mesmos 2 nós = 32 threads).
+Duas execuções, com a variável definida explicitamente: espera ativa
+(\texttt{OMPI\_MCA\_mpi\_yield\_when\_idle=0}) e cede o núcleo
+(\texttt{=1}). $E=\sd/32$ (eficiência relativa às 32 threads de hardware).}
+\label{tab:over}
+\begin{tabular}{l r r r r r r @{\hskip 2em} r r r r r}
+\toprule
+ & \multicolumn{5}{c}{espera ativa (\texttt{yield\_when\_idle=0})} & & \multicolumn{5}{c}{cede o núcleo (\texttt{=1})}\\
+\cmidrule(lr){2-6}\cmidrule(lr){8-12}
+$P$ & $\delta$ & $T_P$ (s) & $S$ & \sd & $E$ & & $T_P$ (s) & $S$ & \sd & $E$\\
+\midrule
+  63 & 6250 & 0,333 & 121,2 & 3,38 & 0,106 & & 0,214 & 188,3 & 5,25 & 0,164\\
+ 127 & 3125 & 0,519 &  77,7 & 1,06 & 0,033 & & 0,184 & 219,8 & 3,01 & 0,094\\
+ 255 & 1563 & 0,728 &  55,4 & 0,40 & 0,012 & & 0,228 & 177,2 & 1,27 & 0,040\\
+ 511 &  782 & 1,906 &  21,2 & 0,08 & 0,002 & & 0,427 &  94,5 & 0,36 & 0,011\\
+1023 &  391 & 6,534 &   6,2 & 0,01 & 0,000 & & 2,119 &  19,1 & 0,04 & 0,001\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{6pt}
+\hrule
+\vspace{4pt}
+{\footnotesize O código completo (\texttt{src/sequencial.c}, \texttt{src/original.c},
+\texttt{src/balanceado.c}), os scripts \texttt{sbatch} e as saídas brutas do Slurm estão no repositório
+público citado no cabeçalho; as referências de linha acima apontam para esses arquivos.}
+
+\end{document}
