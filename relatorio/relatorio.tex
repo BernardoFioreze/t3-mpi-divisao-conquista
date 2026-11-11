@@ -60,7 +60,7 @@ $7{,}4 \times 16{,}9$ (o ganho de algoritmo em $\delta{=}12500$) $\approx 125$. 
 honesto (contra a \emph{mesma} árvore em um processo) e a eficiência $E=\sd/P$ cai de $0{,}67$ ($P{=}3$) a
 $0{,}24$ ($P{=}31$) por causa da comunicação e da árvore (só as folhas calculam --- ponto 3).
 Para a versão balanceada com \textbf{31 processos} (não potência de 2), as folhas têm tamanhos diferentes
-e um $\delta$ único não reproduz a árvore; por isso ela fica fora da Tabela~\ref{tab:bal} (que traz só as
+e um $\delta$ único não reproduz a árvore; por isso ela fica fora da Tabela~\ref{tab:par} (que traz só as
 potências de 2, com \sd{} e $E$), mas seu $S$ é válido e medido: $T_P=0{,}205$\,s, $S=197\times$, contra
 $125\times$ da original no \emph{mesmo} $P{=}31$ (ponto 5).
 
@@ -115,7 +115,7 @@ decisões de modelagem e de medição são do grupo.
 da árvore (nível~1 = vetor inteiro, sem divisão, $\delta=N$ --- é o próprio $T_1$); cada nível a mais
 divide as folhas pela metade. Todas rodam em um só processo. A mesma árvore de nível $n$ corresponde a
 $P=2^{\,n}-1$ processos na versão original e $P=2^{\,n-1}$ na balanceada (daí os $\delta$ compartilhados
-entre as Tabelas~\ref{tab:orig} e~\ref{tab:bal}). O ganho de algoritmo $T_1/T_1^{\delta}$ explica por que
+na Tabela~\ref{tab:par}). O ganho de algoritmo $T_1/T_1^{\delta}$ explica por que
 $S$ passa de $P$.}
 \label{tab:seq}
 \begin{tabular}{l r r r r r}
@@ -137,37 +137,26 @@ nível & $\delta$ & mediana (s) & mín (s) & máx (s) & $T_1/T_1^{\delta}$\\
 \end{table}
 
 \begin{table}[htbp]\centering\footnotesize
-\begin{minipage}[t]{0.48\textwidth}\centering
-\caption{Versão original ($P=2^{\,n}{-}1$, nível $n$). $S=T_1/T_P$; \sd${}=T_1^{\delta}/T_P$; $E=\sd/P$.}
-\label{tab:orig}
-\begin{tabular}{r r r r r r r}
+\caption{Original ($P=2^{\,n}{-}1$) e balanceada ($P=2^{\,n-1}$) lado a lado, por nível $n$ da árvore.
+No mesmo nível as duas ordenam folhas do \textbf{mesmo tamanho} ($\delta=N/2^{\,n-1}$, coluna única);
+o que muda é quantos processos cada uma usa para chegar lá. $S=T_1/T_P$; \sd${}=T_1^{\delta}/T_P$;
+$E=\sd/P$; tempos em segundos. O nível~1 (original com $P{=}1$, vetor inteiro) coincide com $T_1$ da
+Tabela~\ref{tab:seq} ($T_P{=}40{,}39$, $S{=}1{,}00$); a balanceada começa no nível~2 e a original não
+alcança o nível~6.}
+\label{tab:par}
+\begin{tabular}{c c @{\hskip 1em} r r r r r @{\hskip 1.5em} r r r r r}
 \toprule
-$P$ & nível & $\delta$ & $T_P$ (s) & $S$ & \sd & $E$\\
+ & & \multicolumn{5}{c}{\textbf{original}} & \multicolumn{5}{c}{\textbf{balanceada}}\\
+\cmidrule(lr){3-7}\cmidrule(lr){8-12}
+nível & $\delta$ & $P$ & $T_P$ & $S$ & \sd & $E$ & $P$ & $T_P$ & $S$ & \sd & $E$\\
 \midrule
- 1 & 1 & 200000 & 40,388 &   1,00 & ---  & ---\\
- 3 & 2 & 100000 & 10,053 &   4,01 & 1,99 & 0,665\\
- 7 & 3 & 50000  &  2,577 &  15,66 & 3,87 & 0,552\\
-15 & 4 & 25000  &  0,709 &  56,90 & 6,93 & 0,462\\
-31 & 5 & 12500  &  0,322 & 125,38 & 7,41 & 0,239\\
+2 & 100000 &  3 & 10,053 &   4,01 & 1,99 & 0,665 &  2 & 20,081 &   2,01 & 1,00 & 0,499\\
+3 &  50000 &  7 &  2,577 &  15,66 & 3,87 & 0,552 &  4 &  4,992 &   8,08 & 1,99 & 0,499\\
+4 &  25000 & 15 &  0,709 &  56,90 & 6,93 & 0,462 &  8 &  1,262 &  31,98 & 3,90 & 0,487\\
+5 &  12500 & 31 &  0,322 & 125,38 & 7,41 & 0,239 & 16 &  0,361 & 111,84 & 6,61 & 0,413\\
+6 &   6250 & \multicolumn{5}{c}{--- (original vai só até $P{=}31$) ---} & 32 &  0,170 & 236,72 & 6,56 & 0,205\\
 \bottomrule
 \end{tabular}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.48\textwidth}\centering
-\caption{Versão balanceada ($P=2^{\,n-1}$, nível $n$; folhas iguais de $\delta=N/P$, os mesmos $\delta$
-dos níveis 2--6 da Tabela~\ref{tab:orig}). $S=T_1/T_P$; \sd${}=T_1^{\delta}/T_P$; $E=\sd/P$.}
-\label{tab:bal}
-\begin{tabular}{r r r r r r r}
-\toprule
-$P$ & nível & $\delta$ & $T_P$ (s) & $S$ & \sd & $E$\\
-\midrule
- 2 & 2 & 100000 & 20,081 &   2,01 & 1,00 & 0,499\\
- 4 & 3 &  50000 &  4,992 &   8,08 & 1,99 & 0,499\\
- 8 & 4 &  25000 &  1,262 &  31,98 & 3,90 & 0,487\\
-16 & 5 &  12500 &  0,361 & 111,84 & 6,61 & 0,413\\
-32 & 6 &   6250 &  0,170 & 236,72 & 6,56 & 0,205\\
-\bottomrule
-\end{tabular}
-\end{minipage}
 \end{table}
 
 \begin{table}[htbp]\centering\footnotesize
