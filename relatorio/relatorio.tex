@@ -180,6 +180,40 @@ $P$ & $\delta$ & $T_P$ (s) & $S$ & \sd & $E$ & & $T_P$ (s) & $S$ & \sd & $E$\\
 \end{tabular}
 \end{table}
 
+\vspace{4pt}
+\textbf{\large Teste extra: $N = 1{.}000{.}000$}
+
+Para ver o comportamento em escala maior, repetimos o experimento com $N{=}10^6$ (3 repetições, tudo num
+único job). O foco foi a oversubscription profunda, então o sequencial rodou só os níveis 10--13 (sem
+$T_1$); por isso original e balanceado aparecem só com o \textbf{tempo bruto} $T_P$ (sem $S$/\sd). A
+Tabela~\ref{tab:1m} compara as duas versões por nível (mesmo $\delta$ = mesmas folhas). Dois resultados
+se confirmam em escala: (i)~no \emph{mesmo} $\delta$ o balanceado é $\approx2\times$ mais lento que o
+original (ex.\ nível~2: $474$ vs $237$\,s), pela serialização do topo (o pai calcula antes de o
+\texttt{MPI\_Isend} grande progredir, então o ajudante espera); mas no \emph{mesmo} $P$ ele ganha, por
+alcançar uma árvore mais profunda. (ii)~A oversubscription tem \textbf{teto} aqui: em 2 nós, só $P{=}1023$
+rodou; $P{=}2047$ e $4095$ estouraram o \emph{timeout} de 20\,min na espera ativa e $P{=}8191$ falhou no
+\texttt{MPI\_Init} (o runtime não lança 8191 processos). No $P{=}1023$ o \emph{yield} foi
+$\mathbf{3{,}1\times}$ mais rápido que a espera ativa ($2{,}25$ vs $7{,}08$\,s).
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{$N{=}10^6$, 3 repetições, tempo bruto $T_P$ (sem $T_1$, logo sem $S$/\sd\ para as versões
+paralelas). À direita, a única série de oversub que completou ($P{=}1023$), com $E=\sd/32$.}
+\label{tab:1m}
+\begin{tabular}{c c @{\hskip 1em} r r @{\hskip 1em} r r @{\hskip 2.5em} l r r r}
+\toprule
+\multicolumn{6}{c}{\textbf{original $\times$ balanceado (tempo $T_P$, s)}} & \multicolumn{4}{c}{\textbf{oversub $P{=}1023$}}\\
+\cmidrule(lr){1-6}\cmidrule(lr){7-10}
+nível & $\delta$ & orig $P$ & $T_P$ & bal $P$ & $T_P$ & modo & $T_P$ & \sd & $E$\\
+\midrule
+2 & 500000 &  3 & 237,2 &  2 & 474,2 & espera ativa (=0) & 7,08 & 0,25 & 0,008\\
+3 & 250000 &  7 &  60,0 &  4 & 118,7 & cede núcleo (=1)  & 2,25 & 0,77 & 0,024\\
+4 & 125000 & 15 &  15,8 &  8 &  30,4 & \multicolumn{4}{l}{\footnotesize $P\ge2047$: \emph{timeout}/falha no lançamento}\\
+5 &  62500 & 31 &   6,26 & 16 &   8,20 & & & &\\
+6 &  31250 & \multicolumn{1}{c}{---} & --- & 32 &   3,13 & & & &\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \vspace{6pt}
 \hrule
 \vspace{4pt}

@@ -28,6 +28,14 @@ from collections import defaultdict
 from statistics import median
 
 
+def _si(s):
+    """int seguro: devolve None para ausente ou nao-numerico (ex.: P='-')."""
+    try:
+        return int(s)
+    except (TypeError, ValueError):
+        return None
+
+
 def parse_tokens(line):
     d = {}
     for tok in line.split():
@@ -57,9 +65,9 @@ def carrega(arquivos):
                 recs.append({
                     "serie": d.get("serie", "?"),
                     "mode": d.get("mode"),
-                    "P": int(d["P"]) if "P" in d else None,
-                    "delta": int(d["delta"]) if "delta" in d else None,
-                    "N": int(d["N"]) if "N" in d else (int(d["n"]) if "n" in d else None),
+                    "P": _si(d.get("P")),
+                    "delta": _si(d.get("delta")),
+                    "N": _si(d.get("N")) if "N" in d else _si(d.get("n")),
                     "tempo": tempo,
                     "ver": d.get("verificacao", "?"),
                 })
