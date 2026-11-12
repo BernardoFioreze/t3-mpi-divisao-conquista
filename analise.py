@@ -185,7 +185,9 @@ def main():
         if not N or not P or (P & (P - 1)) != 0:
             return None
         delta_bal = (N + P - 1) // P
-        v = t1d_bal.get(delta_bal)
+        # T1^delta depende so de delta (mesma arvore em 1 processo), entao se
+        # nao houver medicao rotulada T1d_bal, serve a T1d_orig do mesmo delta.
+        v = t1d_bal.get(delta_bal) or t1d_orig.get(delta_bal)
         return v[0] if v else None
 
     tabela_paralela(
