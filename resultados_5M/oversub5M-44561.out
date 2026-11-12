@@ -1,0 +1,37 @@
+# nodelist=atlantica[03-04]  N=5000000  REPS=3  nofile=512000  nproc=63680
+CPU(s):                          16
+Thread(s) per core:              2
+Core(s) per socket:              4
+Socket(s):                       2
+Model name:                      Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+serie=oversub mode=default P=63 delta=156250 rep=1  versao=original N=5000000 delta=156250 P=63 tempo=72.675145 verificacao=OK
+serie=oversub mode=default P=63 delta=156250 rep=2  versao=original N=5000000 delta=156250 P=63 tempo=75.772463 verificacao=OK
+serie=oversub mode=default P=63 delta=156250 rep=3  versao=original N=5000000 delta=156250 P=63 tempo=71.647374 verificacao=OK
+serie=oversub mode=default P=127 delta=78125 rep=1  versao=original N=5000000 delta=78125 P=127 tempo=38.064400 verificacao=OK
+serie=oversub mode=default P=127 delta=78125 rep=2  versao=original N=5000000 delta=78125 P=127 tempo=37.674364 verificacao=OK
+serie=oversub mode=default P=127 delta=78125 rep=3  versao=original N=5000000 delta=78125 P=127 tempo=36.828904 verificacao=OK
+serie=oversub mode=default P=255 delta=39063 rep=1  versao=original N=5000000 delta=39063 P=255 tempo=19.890111 verificacao=OK
+serie=oversub mode=default P=255 delta=39063 rep=2  versao=original N=5000000 delta=39063 P=255 tempo=20.013443 verificacao=OK
+serie=oversub mode=default P=255 delta=39063 rep=3  versao=original N=5000000 delta=39063 P=255 tempo=19.576255 verificacao=OK
+serie=oversub mode=default P=511 delta=19532 rep=1  versao=original N=5000000 delta=19532 P=511 tempo=19.423127 verificacao=OK
+serie=oversub mode=default P=511 delta=19532 rep=2  versao=original N=5000000 delta=19532 P=511 tempo=16.759284 verificacao=OK
+serie=oversub mode=default P=511 delta=19532 rep=3  versao=original N=5000000 delta=19532 P=511 tempo=16.188281 verificacao=OK
+serie=oversub mode=default P=1023 delta=9766 rep=1  versao=original N=5000000 delta=9766 P=1023 tempo=16.486932 verificacao=OK
+serie=oversub mode=default P=1023 delta=9766 rep=2  versao=original N=5000000 delta=9766 P=1023 tempo=16.620669 verificacao=OK
+serie=oversub mode=default P=1023 delta=9766 rep=3  versao=original N=5000000 delta=9766 P=1023 tempo=17.122987 verificacao=OK
+serie=oversub mode=yield P=63 delta=156250 rep=1  versao=original N=5000000 delta=156250 P=63 tempo=75.737596 verificacao=OK
+serie=oversub mode=yield P=63 delta=156250 rep=2  versao=original N=5000000 delta=156250 P=63 tempo=76.979655 verificacao=OK
+serie=oversub mode=yield P=63 delta=156250 rep=3  versao=original N=5000000 delta=156250 P=63 tempo=70.784244 verificacao=OK
+serie=oversub mode=yield P=127 delta=78125 rep=1  versao=original N=5000000 delta=78125 P=127 tempo=38.423626 verificacao=OK
+serie=oversub mode=yield P=127 delta=78125 rep=2  versao=original N=5000000 delta=78125 P=127 tempo=38.403885 verificacao=OK
+serie=oversub mode=yield P=127 delta=78125 rep=3  versao=original N=5000000 delta=78125 P=127 tempo=38.246198 verificacao=OK
+serie=oversub mode=yield P=255 delta=39063 rep=1  versao=original N=5000000 delta=39063 P=255 tempo=20.231455 verificacao=OK
+serie=oversub mode=yield P=255 delta=39063 rep=2  versao=original N=5000000 delta=39063 P=255 tempo=20.023563 verificacao=OK
+serie=oversub mode=yield P=255 delta=39063 rep=3  versao=original N=5000000 delta=39063 P=255 tempo=19.875213 verificacao=OK
+serie=oversub mode=yield P=511 delta=19532 rep=1  versao=original N=5000000 delta=19532 P=511 tempo=11.215477 verificacao=OK
+serie=oversub mode=yield P=511 delta=19532 rep=2  versao=original N=5000000 delta=19532 P=511 tempo=10.348348 verificacao=OK
+serie=oversub mode=yield P=511 delta=19532 rep=3  versao=original N=5000000 delta=19532 P=511 tempo=10.644429 verificacao=OK
+serie=oversub mode=yield P=1023 delta=9766 rep=1  versao=original N=5000000 delta=9766 P=1023 tempo=9.720743 verificacao=OK
+serie=oversub mode=yield P=1023 delta=9766 rep=2  versao=original N=5000000 delta=9766 P=1023 tempo=9.739030 verificacao=OK
+serie=oversub mode=yield P=1023 delta=9766 rep=3  versao=original N=5000000 delta=9766 P=1023 tempo=9.504941 verificacao=OK
+# FIM

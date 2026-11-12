@@ -181,7 +181,7 @@ $P$ & $\delta$ & $T_P$ (s) & $S$ & \sd & $E$ & & $T_P$ (s) & $S$ & \sd & $E$\\
 \end{table}
 
 \vspace{4pt}
-\textbf{\large Teste extra: $N = 1{.}000{.}000$}
+\textbf{\large Teste extra 1: $N = 10^6$}
 
 Para ver o comportamento em escala maior, repetimos o experimento com $N{=}10^6$ (3 repetições, tudo num
 único job). O foco foi a oversubscription profunda, então o sequencial rodou só os níveis 10--13 (sem
@@ -210,6 +210,37 @@ nível & $\delta$ & orig $P$ & $T_P$ & bal $P$ & $T_P$ & modo & $T_P$ & \sd & $E
 4 & 125000 & 15 &  15,8 &  8 &  30,4 & \multicolumn{4}{l}{\footnotesize $P\ge2047$: \emph{timeout}/falha no lançamento}\\
 5 &  62500 & 31 &   6,26 & 16 &   8,20 & & & &\\
 6 &  31250 & \multicolumn{1}{c}{---} & --- & 32 &   3,13 & & & &\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{4pt}
+\textbf{\large Teste extra 2: oversub com $N = 5\times10^6$}
+
+Isolando a oversubscription num vetor ainda maior (só os tempos dos dois modos, $P{=}63$--$1023$, 3
+repetições) aparece um limite do \emph{yield} (Tabela~\ref{tab:5m}). Com \textbf{folhas grandes} ($P$
+baixo) cada processo passa quase todo o tempo ordenando (\emph{CPU-bound}) e quase não espera, então os
+dois modos \textbf{empatam} ($P{=}63$--$255$). O \emph{yield} só ganha quando a oversubscription aperta
+($P\ge511$, 16--32$\times$ as 32 threads): as folhas ficam menores, o peso de espera/intercalação cresce,
+e os processos ociosos da espera ativa roubam ciclos. Repare que na espera ativa o tempo \textbf{estaciona}
+de $P{=}511$ para $1023$ ($16{,}8\to16{,}6$\,s: mais processos não ajudam), enquanto no \emph{yield}
+continua caindo ($10{,}6\to9{,}7$\,s). Comparado ao $N{=}10^6$ (folhas minúsculas, \emph{yield} $3{,}1\times$
+em $P{=}1023$), aqui o ganho cai para $1{,}7\times$: o benefício do \emph{yield} \textbf{cresce com a
+oversubscription e encolhe quanto mais pesada (\emph{CPU-bound}) é cada folha}.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Oversub com $N{=}5\times10^6$ (3 repetições, tempo $T_P$ mediano). Razão $=$ ativa$/$yield
+(${>}1$ = yield mais rápido).}
+\label{tab:5m}
+\begin{tabular}{r r r r r}
+\toprule
+$P$ & $\delta$ & espera ativa $T_P$ (s) & cede núcleo $T_P$ (s) & razão\\
+\midrule
+  63 & 156250 & 72,7 & 75,7 & 0,96\\
+ 127 &  78125 & 37,7 & 38,4 & 0,98\\
+ 255 &  39063 & 19,9 & 20,0 & 0,99\\
+ 511 &  19532 & 16,8 & 10,6 & 1,58\\
+1023 &   9766 & 16,6 &  9,7 & 1,71\\
 \bottomrule
 \end{tabular}
 \end{table}
