@@ -184,8 +184,10 @@ $P$ & $\delta$ & $T_P$ (s) & $S$ & \sd & $E$ & & $T_P$ (s) & $S$ & \sd & $E$\\
 \textbf{\large Teste extra 1: $N = 10^6$}
 
 Para ver o comportamento em escala maior, repetimos o experimento com $N{=}10^6$ (3 repetições, tudo num
-único job). O foco foi a oversubscription profunda, então o sequencial rodou só os níveis 10--13 (sem
-$T_1$); por isso original e balanceado aparecem só com o \textbf{tempo bruto} $T_P$ (sem $S$/\sd). A
+único job). O foco foi a oversubscription profunda, então o sequencial rodou só os níveis 10--13
+(Tabela~\ref{tab:seq1m}; sem $T_1$); por isso original e balanceado aparecem só com o \textbf{tempo bruto}
+$T_P$ (sem $S$/\sd). O nível~10 ($\delta{=}1954$, $T_1^{\delta}{=}1{,}74$\,s) é a referência que dá o \sd\
+do oversub $P{=}1023$. A
 Tabela~\ref{tab:1m} compara as duas versões por nível (mesmo $\delta$ = mesmas folhas). Dois resultados
 se confirmam em escala: (i)~no \emph{mesmo} $\delta$ o balanceado é $\approx2\times$ mais lento que o
 original (ex.\ nível~2: $474$ vs $237$\,s), pela serialização do topo (o pai calcula antes de o
@@ -210,6 +212,23 @@ nível & $\delta$ & orig $P$ & $T_P$ & bal $P$ & $T_P$ & modo & $T_P$ & \sd & $E
 4 & 125000 & 15 &  15,8 &  8 &  30,4 & \multicolumn{4}{l}{\footnotesize $P\ge2047$: \emph{timeout}/falha no lançamento}\\
 5 &  62500 & 31 &   6,26 & 16 &   8,20 & & & &\\
 6 &  31250 & \multicolumn{1}{c}{---} & --- & 32 &   3,13 & & & &\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Referências sequenciais (1 processo) do teste $N{=}10^6$: $T_1^{\delta}$ dos níveis 10--13
+(sem $T_1$). O nível~10 ($\delta{=}1954$) é a referência usada para a \sd\ do oversub $P{=}1023$ da
+Tabela~\ref{tab:1m}.}
+\label{tab:seq1m}
+\begin{tabular}{r r r}
+\toprule
+nível & $\delta$ & $T_1^{\delta}$ (s)\\
+\midrule
+10 & 1954 & 1,74\\
+11 &  977 & 0,91\\
+12 &  489 & 0,43\\
+13 &  245 & 0,24\\
 \bottomrule
 \end{tabular}
 \end{table}
