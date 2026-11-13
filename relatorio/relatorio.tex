@@ -183,52 +183,50 @@ $P$ & $\delta$ & $T_P$ (s) & $S$ & \sd & $E$ & & $T_P$ (s) & $S$ & \sd & $E$\\
 \vspace{4pt}
 \textbf{\large Teste extra 1: $N = 10^6$}
 
-Para ver o comportamento em escala maior, repetimos o experimento com $N{=}10^6$ (3 repetições, tudo num
-único job). O foco foi a oversubscription profunda, então o sequencial rodou só os níveis 10--13
-(Tabela~\ref{tab:seq1m}; sem $T_1$); por isso original e balanceado aparecem só com o \textbf{tempo bruto}
-$T_P$ (sem $S$/\sd). O nível~10 ($\delta{=}1954$, $T_1^{\delta}{=}1{,}74$\,s) é a referência que dá o \sd\
-do oversub $P{=}1023$. A
-Tabela~\ref{tab:1m} compara as duas versões por nível (mesmo $\delta$ = mesmas folhas). Dois resultados
-se confirmam em escala: (i)~no \emph{mesmo} $\delta$ o balanceado é $\approx2\times$ mais lento que o
-original (ex.\ nível~2: $474$ vs $237$\,s), pela serialização do topo (o pai calcula antes de o
-\texttt{MPI\_Isend} grande progredir, então o ajudante espera); mas no \emph{mesmo} $P$ ele ganha, por
-alcançar uma árvore mais profunda. (ii)~A oversubscription tem \textbf{teto} aqui: em 2 nós, só $P{=}1023$
-rodou; $P{=}2047$ e $4095$ estouraram o \emph{timeout} de 20\,min na espera ativa e $P{=}8191$ falhou no
-\texttt{MPI\_Init} (o runtime não lança 8191 processos). No $P{=}1023$ o \emph{yield} foi
-$\mathbf{3{,}1\times}$ mais rápido que a espera ativa ($2{,}25$ vs $7{,}08$\,s).
+Para ver o comportamento em escala maior, repetimos o experimento com $N{=}10^6$ (3 repetições). Não
+rodamos o $T_1$ (Bubble do vetor inteiro a $10^6$ levaria $\sim$17\,min/rodada), então não há $S$
+absoluto; mas o sequencial $T_1^{\delta}$ rodou nos \textbf{mesmos $\delta$ de cada versão} (coluna
+$T_1^{\delta}$ da Tabela~\ref{tab:1m}), o que dá \sd\ e $E$. Dois resultados se confirmam em escala:
+(i)~no \emph{mesmo} nível (mesmo $\delta$) o balanceado tem \sd\ $\approx$ metade do original (nível~2:
+$1{,}06$ vs $2{,}12$), pela serialização do topo --- com $P{=}2$ o pai calcula antes de o
+\texttt{MPI\_Isend} grande progredir e o ajudante espera; mas no \emph{mesmo} $P$ o balanceado ganha, por
+alcançar uma árvore mais profunda. (ii)~A eficiência cai com $P$ nas duas versões ($E$: $0{,}71\to0{,}32$
+na original, $0{,}53\to0{,}31$ na balanceada), como no $N{=}200$k. Sobre a oversubscription
+(Tabela~\ref{tab:over1m}): só $P{=}1023$ completou --- $P\ge2047$ deu \emph{timeout} (espera ativa) ou
+falha de \texttt{MPI\_Init} ($P{=}8191$) em 2 nós; nele o \emph{yield} foi $\mathbf{3{,}1\times}$ mais
+rápido que a espera ativa.
 
 \begin{table}[htbp]\centering\footnotesize
-\caption{$N{=}10^6$, 3 repetições, tempo bruto $T_P$ (sem $T_1$, logo sem $S$/\sd\ para as versões
-paralelas). À direita, a única série de oversub que completou ($P{=}1023$), com $E=\sd/32$.}
+\caption{$N{=}10^6$, 3 repetições. Original e balanceado por nível; $T_1^{\delta}$ é a referência
+sequencial (1 processo) do \emph{mesmo} $\delta$, que gera $\sd{=}T_1^{\delta}/T_P$ e $E{=}\sd/P$. Tempos
+em s. (Sem $T_1$, logo sem $S$ absoluto.)}
 \label{tab:1m}
-\begin{tabular}{c c @{\hskip 1em} r r @{\hskip 1em} r r @{\hskip 2.5em} l r r r}
+\begin{tabular}{c c r @{\hskip 1.2em} r r r r @{\hskip 1.8em} r r r r}
 \toprule
-\multicolumn{6}{c}{\textbf{original $\times$ balanceado (tempo $T_P$, s)}} & \multicolumn{4}{c}{\textbf{oversub $P{=}1023$}}\\
-\cmidrule(lr){1-6}\cmidrule(lr){7-10}
-nível & $\delta$ & orig $P$ & $T_P$ & bal $P$ & $T_P$ & modo & $T_P$ & \sd & $E$\\
+ & & & \multicolumn{4}{c}{\textbf{original}} & \multicolumn{4}{c}{\textbf{balanceado}}\\
+\cmidrule(lr){4-7}\cmidrule(lr){8-11}
+nível & $\delta$ & $T_1^{\delta}$ & $P$ & $T_P$ & \sd & $E$ & $P$ & $T_P$ & \sd & $E$\\
 \midrule
-2 & 500000 &  3 & 237,2 &  2 & 474,2 & espera ativa (=0) & 7,08 & 0,25 & 0,008\\
-3 & 250000 &  7 &  60,0 &  4 & 118,7 & cede núcleo (=1)  & 2,25 & 0,77 & 0,024\\
-4 & 125000 & 15 &  15,8 &  8 &  30,4 & \multicolumn{4}{l}{\footnotesize $P\ge2047$: \emph{timeout}/falha no lançamento}\\
-5 &  62500 & 31 &   6,26 & 16 &   8,20 & & & &\\
-6 &  31250 & \multicolumn{1}{c}{---} & --- & 32 &   3,13 & & & &\\
+2 & 500000 & 503,6 &  3 & 237,2 & 2,12 & 0,708 &  2 & 474,2 & 1,06 & 0,531\\
+3 & 250000 & 252,0 &  7 &  60,0 & 4,20 & 0,600 &  4 & 118,7 & 2,12 & 0,531\\
+4 & 125000 & 125,5 & 15 &  15,8 & 7,94 & 0,530 &  8 &  30,4 & 4,12 & 0,515\\
+5 &  62500 &  62,3 & 31 &   6,26 & 9,95 & 0,321 & 16 &   8,20 & 7,60 & 0,475\\
+6 &  31250 &  30,8 & \multicolumn{4}{c}{--- (original vai só até $P{=}31$) ---} & 32 & 3,13 & 9,83 & 0,307\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]\centering\footnotesize
-\caption{Referências sequenciais (1 processo) do teste $N{=}10^6$: $T_1^{\delta}$ dos níveis 10--13
-(sem $T_1$). O nível~10 ($\delta{=}1954$) é a referência usada para a \sd\ do oversub $P{=}1023$ da
-Tabela~\ref{tab:1m}.}
-\label{tab:seq1m}
-\begin{tabular}{r r r}
+\caption{$N{=}10^6$, oversub $P{=}1023$ (única série que completou; $\delta{=}1954$,
+$T_1^{\delta}{=}1{,}74$\,s, $E{=}\sd/32$). $P\ge2047$: \emph{timeout} (espera ativa) ou falha de
+\texttt{MPI\_Init} ($P{=}8191$) em 2 nós.}
+\label{tab:over1m}
+\begin{tabular}{l r r r}
 \toprule
-nível & $\delta$ & $T_1^{\delta}$ (s)\\
+modo & $T_P$ (s) & \sd & $E$\\
 \midrule
-10 & 1954 & 1,74\\
-11 &  977 & 0,91\\
-12 &  489 & 0,43\\
-13 &  245 & 0,24\\
+espera ativa (=0) & 7,08 & 0,25 & 0,008\\
+cede núcleo (=1)  & 2,25 & 0,77 & 0,024\\
 \bottomrule
 \end{tabular}
 \end{table}

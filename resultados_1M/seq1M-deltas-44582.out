@@ -1,0 +1,17 @@
+# host=atlantica05  N=1000000  REPS=3
+serie=T1d_orig P=- delta=500000 rep=1  n=1000000 delta=500000 tempo=503.871693 verificacao=OK
+serie=T1d_orig P=- delta=500000 rep=2  n=1000000 delta=500000 tempo=503.316505 verificacao=OK
+serie=T1d_orig P=- delta=500000 rep=3  n=1000000 delta=500000 tempo=503.647446 verificacao=OK
+serie=T1d_orig P=- delta=250000 rep=1  n=1000000 delta=250000 tempo=252.036209 verificacao=OK
+serie=T1d_orig P=- delta=250000 rep=2  n=1000000 delta=250000 tempo=252.086565 verificacao=OK
+serie=T1d_orig P=- delta=250000 rep=3  n=1000000 delta=250000 tempo=251.982472 verificacao=OK
+serie=T1d_orig P=- delta=125000 rep=1  n=1000000 delta=125000 tempo=125.580007 verificacao=OK
+serie=T1d_orig P=- delta=125000 rep=2  n=1000000 delta=125000 tempo=125.529810 verificacao=OK
+serie=T1d_orig P=- delta=125000 rep=3  n=1000000 delta=125000 tempo=125.485239 verificacao=OK
+serie=T1d_orig P=- delta=62500 rep=1  n=1000000 delta=62500 tempo=62.306740 verificacao=OK
+serie=T1d_orig P=- delta=62500 rep=2  n=1000000 delta=62500 tempo=62.308722 verificacao=OK
+serie=T1d_orig P=- delta=62500 rep=3  n=1000000 delta=62500 tempo=62.292721 verificacao=OK
+serie=T1d_orig P=- delta=31250 rep=1  n=1000000 delta=31250 tempo=30.783061 verificacao=OK
+serie=T1d_orig P=- delta=31250 rep=2  n=1000000 delta=31250 tempo=30.822716 verificacao=OK
+serie=T1d_orig P=- delta=31250 rep=3  n=1000000 delta=31250 tempo=30.789925 verificacao=OK
+# FIM
